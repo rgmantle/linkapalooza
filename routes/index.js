@@ -1,8 +1,22 @@
 const apiRouter = require('express').Router();
+const { getAllLinks, getLinksWithTags } = require('../db/index');
 
-apiRouter.get("/", (req, res, next) => {
+apiRouter.get("/links", async (req, res) => {
+
+  const links = await getAllLinks();
+
   res.send({
-    message: "API is under construction!"
+    links
+  });
+});
+
+
+apiRouter.get("/link_tags", async (req, res) => {
+
+  const links = await getLinksWithTags('https://github.com/');
+
+  res.send({
+    links
   });
 });
 
