@@ -92,12 +92,20 @@ const getAllLinks = async() => {
   return rows
 }
 
+const getAllTags = async() => {
+  const { rows } = await client.query(`
+    SELECT * FROM tags`)
+
+  return rows
+}
+
 // export
 module.exports = {
   client,
   createLinks,
   createTags,
   createLinkTags,
+  getAllTags,
   // insertLinkTags,
   getLinksWithTags,
   getAllLinks
