@@ -1,32 +1,22 @@
 const apiRouter = require('express').Router();
-const { getAllLinks, getLinksWithTags, getAllTags } = require('../db/index');
+const linksRouter = require('./links');
+const tagsRouter = require('./tags');
+const linkTagsRouter = require('./link_tags');
 
-apiRouter.get("/links", async (req, res) => {
-
-  const links = await getAllLinks();
-
-  res.send({
-    links
-  });
-});
-
-apiRouter.get("/tags", async (req, res) => {
-
-  const links = await getAllTags();
-
-  res.send({
-    links
-  });
-});
+apiRouter.use('/links', linksRouter);
+apiRouter.use('/tags', tagsRouter);
+apiRouter.use('/linkTagsRouter', linkTagsRouter);
+// const { getAllLinks, getLinksWithTags, getAllTags } = require('../db/index');
 
 
-apiRouter.get("/link_tags", async (req, res) => {
 
-  const links = await getLinksWithTags('https://github.com/');
+// apiRouter.get("/link_tags", async (req, res) => {
 
-  res.send({
-    links
-  });
-});
+//   const links = await getLinksWithTags('https://github.com/');
+
+//   res.send({
+//     links
+//   });
+// });
 
 module.exports = apiRouter;

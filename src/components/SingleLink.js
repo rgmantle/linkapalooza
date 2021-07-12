@@ -9,7 +9,10 @@ const SingleLink = () => {
   const linkId = path.slice(9);
 
   return (
-    <span>{`Link Id: ${linkId}`}</span>
+    <div>
+      <span>{`Link Id: ${linkId}`}</span>
+      <span>{`${link.comment}`}</span>
+    </div>
   );
 };
 
