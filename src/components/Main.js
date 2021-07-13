@@ -3,15 +3,14 @@ import { Switch, Route } from 'react-router-dom';
 import Tags from './Tags';
 import Links from './Links';
 import SingleLink from './SingleLink';
-import AddNewLink from './CreateLink';
-import SearchBar from './SearchBar'
+import CreateLink from './CreateLink';
 
 const Main = () => {
   return (
     <main>
       <Switch>
         <Route path={'/links'} exact>
-          <AddNewLink />
+          <CreateLink />
           <Links />
         </Route>
         <Route path={'/links/:linkId'} exact>
@@ -21,7 +20,7 @@ const Main = () => {
           <Tags />
         </Route>
         <Route>
-          <SearchBar />
+          Welcome Home!
         </Route>
       </Switch>
     </main>
