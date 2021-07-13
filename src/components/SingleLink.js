@@ -11,7 +11,7 @@ const SingleLink = () => {
   return (
     <div>
       <span>{`Link Id: ${linkId}`}</span>
-      <span>{`${link.comment}`}</span>
+      {/* <span>{`${link.comment}`}</span> */}
     </div>
   );
 };

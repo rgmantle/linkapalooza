@@ -1,43 +1,21 @@
-import axios from 'axios';
+require('dotenv').config();
 
-export async function getLinks() {
-  try {
-    const { data: { links } } = await axios.get('/api/links');
-    return links;
-  } catch (error) {
-    throw error;
-  }
-}
+const express = require('express');
+const apiRouter = express.Router();
 
-export async function getTags() {
-  try {
-    const { data: { tags } } = await axios.get('/api/tags');
-    return tags;
-  } catch (error) {
-    throw error;
-  }
-}
+apiRouter.get('/', async(req, res, next) => {
+    res.send({message: 'Successfully reached /api'});
+    
+    next();
+})
 
-export const createLink = async (linkurl) => {
-  try {
-    await axios.post('/api/links/create', {
-      linkurl,
-    });
-    return true;
-  } catch (e) {
-    console.error(e);
+const linkRouter = require('./links');
+apiRouter.use('/links', linkRouter);
 
-    return false;
-  }
-}
+const searchResults = require('./SearchResults')
+apiRouter.use('/SearchResults', searchResults);
 
-export const getLinkById = async (linkId) => {
-  try {
-    const { data } = await axios.get(`/api/links/${linkId}`);
-    return data;
-  } catch (e) {
-    console.error(e);
+const tagsRouter = require('./tags');
+apiRouter.use('/tags', tagsRouter);
 
-    return false;
-  }
-}
+module.exports= apiRouter;

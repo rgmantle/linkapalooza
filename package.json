@@ -1,48 +1,50 @@
 {
-  "name": "starting_code",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "postinstall": "npm run client:build",
-    "client:dev": "react-scripts start",
-    "client:build": "react-scripts build",
-    "server:dev": "nodemon -L index.js",
-    "db:build": "node ./db/init_db",
-    "start": "node index.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@chakra-ui/react": "^1.6.4",
-    "@emotion/react": "^11.4.0",
-    "@emotion/styled": "^11.3.0",
-    "axios": "^0.19.2",
-    "express": "^4.17.1",
-    "framer-motion": "^4.1.17",
-    "morgan": "^1.10.0",
-    "pg": "^8.2.1",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "^3.4.1",
-    "react-strap": "^0.0.1"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.4"
-  },
-  "proxy": "http://localhost:5000",
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+    "name": "starting_code",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "postinstall": "npm run client:build",
+        "client:dev": "react-scripts start",
+        "client:build": "react-scripts build",
+        "server:dev": "nodemon -L index.js",
+        "db:build": "node ./db/init_db",
+        "start": "node index.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@chakra-ui/react": "^1.6.4",
+        "@emotion/react": "^11.4.0",
+        "@emotion/styled": "^11.3.0",
+        "axios": "^0.19.2",
+        "cors": "^2.8.5",
+        "express": "^4.17.1",
+        "framer-motion": "^4.1.17",
+        "morgan": "^1.10.0",
+        "pg": "^8.2.1",
+        "pg-native": "^3.0.0",
+        "react": "^16.13.1",
+        "react-dom": "^16.13.1",
+        "react-router-dom": "^5.2.0",
+        "react-scripts": "^3.4.1",
+        "react-strap": "^0.0.1"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.4"
+    },
+    "proxy": "http://localhost:5000",
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    }
 }

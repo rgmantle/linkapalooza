@@ -1,145 +1,65 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { Button } from '@chakra-ui/react';
-import { createLink } from '../api/index';
+import axios from 'axios';
+import React, { setState, useState } from 'react';
+import { Button, Form, Stack, Input } from '@chakra-ui/react';
 
-const CreateLink = () => {
-  const [linkurl, setLinkUrl] = useState('');
-  const clicks = 0;
-  const [comment, setCommentText] = useState('')
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState('');
-  const history = useHistory();
+const AddNewLink = ({setRefresh}) => {
+  const initialFormData = Object.freeze({})
 
-  const goToLinks = () => {
-    history.push('/links');
-  };
-
-  const setLink = (link) => {
-    if(error) {
-      setError('');
-    }
-
-    if (link.length <= 85) {
-      setLinkUrl(link);
-    }
-  };
-
-  // const setComment = (comment) => {
-  //   if(error) {
-  //     setError('');
-  //   }
-
-  //   if (comment.length <= 85) {
-  //     setComment(comment);
-  //   }
-  // };
-
-  const handleSubmit = async (linkurl, clicks, comment) => {
-    setSubmitting(true);
-
-    const success = await createLink(linkurl, clicks, comment);
-
-    if (success) {
-      setLinkUrl('');
-      setCommentText('');
-      goToLinks();
-    } else {
-      setError('Failed to create link! Please try again.');
-    }
-    setSubmitting(false);
+  const [formData, setFormData] = useState(initialFormData);
+  const {linkurl, comment, tags} = formData
+  
+  const handleURL = (e) => {
+    setFormData({
+      ...formData, linkurl : e.target.value
+    });
   }
 
-  return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        flexDirection: 'column',
-      }}
-    >
-      <span
-        style={{
-          fontSize: '3em',
-          fontWeight: 'bold',
-        }}
-      >
-        Add a Link
-      </span>
-      <form
-        onSubmit={
-          (e) => {
-            e.preventDefault();
-          }
-        }
-        style={{
-          border: 'solid 3px red',
-          padding: '1em',
-          display: 'flex',
-          flexDirection: 'column',
-          backgroundColor: submitting ? 'gray' : undefined,
-        }}
-      >
-        <label>
-          Link Address:
-          &nbsp;
-          <input
-            style={{
-              color: 'black',
-            }}
-            onChange={
-              ({ target: { value } }) => {
-                setLink(value);
-              }
-            }
-            value={linkurl}
-            disabled={submitting}
-          />
-        </label>
-        {/* <label>
-          Description:
-          &nbsp;
-          <input
-            style={{
-              color: 'black',
-            }}
-            onChange={
-              ({ target: { value } }) => {
-                setComment(value);
-              }
-            }
-            value={comment}
-            disabled={submitting}
-          />
-        </label> */}
-        {
-          error && (
-            <span
-              style={{
-                color: 'red',
-              }}
-            >
-              {error}
-            </span>
-          )
-        }
-        <Button
-          colorScheme={'teal'}
-          size={'sm'}
-          style={{
-            marginTop: '1em',
-          }}
-          disabled={submitting}
-          onClick={
-            () => handleSubmit(linkurl, clicks, comment)
-          }
-        >
-          Submit
-        </Button>
-      </form>
-    </div>
-  );
+  const handleComments = (e) => {
+    setFormData({
+       ...formData, comment : e.target.value
+    });
+  }
+
+  const handleTags = (e) => {
+    const tagsString = e.target.value;
+    const tagsArray = tagsString.split(',');
+    setFormData({
+        ...formData,tags : tagsArray
+    });
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    try {
+      if (formData.linkurl===''||!formData.linkurl) {
+        alert('Please enter a link address');
+        console.log('No url')
+        return;
+      }
+      axios.post('/api/links', formData)
+      .then((res)=>{
+          setFormData({})
+          setRefresh(true);
+
+      })
+    } catch (error) {
+      throw error;
+    };
+  
+    return (
+      <Form onSubmit={handleSubmit}>
+        <Stack spacing={3}>
+          <Input variant="outline" placeholder="URL" size="md" onChange={handleURL} />
+          <Input variant="outline" placeholder="Describe this url" size="md" onChange={handleComments} />
+          <Input variant="outline" placeholder="tags here" size="md" onChange={handleTags} />
+        </Stack>
+        <Button>Submit</Button>
+      </Form>
+    );
+  };
+    
+
 };
 
-export default CreateLink;
+
+export default AddNewLink;

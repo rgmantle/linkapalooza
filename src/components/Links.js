@@ -6,23 +6,17 @@ import { getLinks } from '../api/index';
 const LinkCard = ({ links }) => {
     const history = useHistory();
 
-    const goToLink = (linkId) => {
-        history.push(`/links/${linkId}`);
+    const goToLink = (linkurl) => {
+        history.push(`${linkurl}`);
     }
 
     return (
         <div>
-            <Text fontSize={'3x1'}>{links.linkurl}</Text>
-            <Button
-                colorScheme={'teal'}
-                onClick={
-                () => {
-                    goToLink(links.id);
-                }
-                }
-            >
-                See Details
-      </Button>
+            <a href={links.linkurl} target="blank">{links.linkurl}
+            </a>
+            <Text fontSize={'3x1'}>{links.comment}</Text>
+            <Text fontSize={'2x1'}>Visits: {links.clicks}</Text>
+            <br />
         </div>
     )
 };

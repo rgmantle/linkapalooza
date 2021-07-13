@@ -15,7 +15,7 @@ const path = require('path');
 server.use(express.static(path.join(__dirname, 'build')));
 
 // here's our API
-server.use('/api', require('./routes'));
+server.use('/api', require('./src/api'));
 
 // by default serve up the react app if we don't recognize the route
 server.use((req, res, next) => {
@@ -23,7 +23,7 @@ server.use((req, res, next) => {
 });
 
 // bring in the DB connection
-const { client } = require('./db');
+const { client } = require('./src/db');
 
 // connect to the server
 const PORT = process.env.PORT || 5000;
