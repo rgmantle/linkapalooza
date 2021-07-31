@@ -1,143 +1,61 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Button } from '@chakra-ui/react';
-import { createLink } from '../api/index';
+import { Button, Input, Label, FormGroup, Form } from '@chakra-ui/react';
+import { createLink } from '../api';
 
 const CreateLink = () => {
   const [linkurl, setLinkUrl] = useState('');
   const clicks = 0;
   const [comment, setCommentText] = useState('')
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState('');
   const history = useHistory();
 
-  const goToLinks = () => {
-    history.push('/links');
-  };
+   return (
+     <div className="CreateLink">
+       <Form
+          onSubmit={async (event) => {
+            event.preventDefault();
+       
 
-  const setLink = (link) => {
-    if(error) {
-      setError('');
-    }
-
-    if (link.length <= 85) {
-      setLinkUrl(link);
-    }
-  };
-
-  // const setComment = (comment) => {
-  //   if(error) {
-  //     setError('');
-  //   }
-
-  //   if (comment.length <= 85) {
-  //     setComment(comment);
-  //   }
-  // };
-
-  const handleSubmit = async (linkurl, clicks, comment) => {
-    setSubmitting(true);
-
-    const success = await createLink(linkurl, clicks, comment);
-
-    if (success) {
-      setLinkUrl('');
-      setCommentText('');
-      goToLinks();
-    } else {
-      setError('Failed to create link! Please try again.');
-    }
-    setSubmitting(false);
-  }
-
-  return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        flexDirection: 'column',
-      }}
-    >
-      <span
-        style={{
-          fontSize: '3em',
-          fontWeight: 'bold',
+          try {
+            await createLink(linkurl, comment);
+            history.push("/links");
+          } catch (error) {}
         }}
       >
-        Add a Link
-      </span>
-      <form
-        onSubmit={
-          (e) => {
-            e.preventDefault();
-          }
-        }
-        style={{
-          border: 'solid 3px blue',
-          padding: '1em',
-          display: 'flex',
-          flexDirection: 'column',
-          backgroundColor: submitting ? 'gray' : undefined,
-        }}
-      >
-        <label>
-          Link Address:
-          &nbsp;
-          <input
-            style={{
-              color: 'black',
-            }}
-            onChange={
-              ({ target: { value } }) => {
-                setLink(value);
-              }
-            }
+        <FormGroup>
+          <Label for="link">Link</Label>
+          <Input
+            type="text"
+            id="link"
+            placeholder="link url here"
+            required={true}
             value={linkurl}
-            disabled={submitting}
+            onChange={(event) => setLinkUrl(event.target.value)}
           />
-        </label>
-        {/* <label>
-          Description:
-          &nbsp;
-          <input
-            style={{
-              color: 'black',
-            }}
-            onChange={
-              ({ target: { value } }) => {
-                setComment(value);
-              }
-            }
+        </FormGroup>
+        <FormGroup>
+          <Label for="link">Description</Label>
+          <Input
+            type="text"
+            id="comment"
+            placeholder="description"
+            required={true}
             value={comment}
-            disabled={submitting}
+            onChange={(event) => setCommentText(event.target.value)}
           />
-        </label> */}
-        {
-          error && (
-            <span
-              style={{
-                color: 'gray',
-              }}
-            >
-              {error}
-            </span>
-          )
-        }
+        </FormGroup>
         <Button
           colorScheme={'orange'}
           size={'sm'}
           style={{
             marginTop: '1em',
           }}
-          disabled={submitting}
-          onClick={
-            () => handleSubmit(linkurl, clicks, comment)
-          }
+          type="submit"
+          
         >
           Submit
         </Button>
-      </form>
+      </Form>
     </div>
   );
 };

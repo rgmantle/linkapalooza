@@ -1,30 +1,13 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
-import Tags from './Tags';
-import Links from './Links';
-import SingleLink from './SingleLink';
-import CreateLink from './CreateLink';
+
+
 
 const Main = () => {
   return (
-    <main>
-      <Switch>
-        <Route path={'/links'} exact>
-          <CreateLink />
-          <Links />
-        </Route>
-        <Route path={'/links/:linkId'} exact>
-          <SingleLink />
-        </Route>
-        <Route path={'/tags'} exact>
-          <Tags />
-        </Route>
-        <Route>
-          Welcome Home!
-        </Route>
-      </Switch>
-    </main>
-  )
+    <div className="Home">
+        <h1>Welcome to Linkerator</h1>
+        <p>Save your links here</p>
+    </div>
+  );
 };
-
 export default Main;

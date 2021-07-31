@@ -24,7 +24,7 @@ async function buildTables() {
         linkurl varchar(255) UNIQUE NOT NULL,
         clicks INT,
         comment varchar(255),
-        date DATE DEFAULT CURRENT_DATE,
+        date DATE DEFAULT CURRENT_DATE
       );
       CREATE TABLE tags (
         id SERIAL PRIMARY KEY,

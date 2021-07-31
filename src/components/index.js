@@ -4,3 +4,4 @@ export { default as Links } from './Links';
 export { default as SingleLink } from './SingleLink';
 export { default as Tags } from './Tags'
 export { default as CreateLink } from './CreateLink';
+export { default as CreateTag } from './CreateTag';

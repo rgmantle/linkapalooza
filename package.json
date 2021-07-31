@@ -27,7 +27,8 @@
         "react-dom": "^16.13.1",
         "react-router-dom": "^5.2.0",
         "react-scripts": "^3.4.1",
-        "react-strap": "^0.0.1"
+        "react-strap": "^0.0.1",
+        "reactstrap": "^8.9.0"
     },
     "devDependencies": {
         "nodemon": "^2.0.4"

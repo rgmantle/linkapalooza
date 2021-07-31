@@ -18,10 +18,14 @@ export async function getTags() {
   }
 }
 
-export const createLink = async (linkurl) => {
+export const createLink = async (linkurl, comment) => {
   try {
-    await axios.post('/api/links/create', {
-      linkurl,
+    if (!linkurl || !comment ) {
+      return false;
+    }
+
+    await axios.post('/api/links/', {
+      linkurl, comment
     });
     return true;
   } catch (e) {
@@ -39,5 +43,19 @@ export const getLinkById = async (linkId) => {
     console.error(e);
 
     return false;
+  }
+}
+
+export async function createTag(name) {
+  try {
+    if (!name) {
+      return false;
+    }
+
+    await axios.post("/api/tags", { name });
+
+    return true;
+  } catch (error) {
+    throw error;
   }
 }

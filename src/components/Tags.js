@@ -1,52 +1,46 @@
-import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { Text } from '@chakra-ui/react';
-import { getTags } from '../api';
+import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 
-const TagWords = ({ tags }) => {
-    const history = useHistory();
 
-    const goToTag = (tagId) => {
-        history.push(`/tags/${tagId}`);
-    }
+import { Card, CardBody, CardTitle, Button } from "reactstrap";
 
-    return (
-        <div>
-          <Text fontSize={'3x1'}>{tags.tag}</Text>
-        </div>
-    )
+import { getTags } from "../api";
+const Tags = (props) => {
+  const { tags, setTags } = props;
+  const history = useHistory();
+
+  useEffect(() => {
+    Promise.all([getTags()])
+      .then(([tags]) => {
+        setTags(tags);
+      })
+      .catch(console.error);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return (
+    <div className="Tags">
+      <h1 className="display-3">Tags</h1>
+      <Button
+        color="primary"
+        onClick={() => {
+          history.push("/newtag");
+        }}
+        style={{ margin: "1rem" }}
+      >
+        New Tag
+      </Button>
+      {tags.map((tag) => {
+        return (
+          <Card style={{ margin: "2rem" }} key={tag.tag}>
+            <CardBody>
+              <CardTitle>Name: {tag.tag}</CardTitle>
+            </CardBody>
+          </Card>
+        );
+      })}
+    </div>
+  );
 };
 
-const Tags = () => {
-    const [tags, setTags] = useState([]);
-
-    useEffect(() => {
-        const getAndSetTags = async () => {
-            const serverTags = await getTags();
-
-            setTags(serverTags);
-        };
-
-    getAndSetTags();
-    }, [])
-
-    return (
-        <div
-          style={{
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <h2>All Tags</h2>
-          {
-            tags.map((p, i) => (
-              <TagWords tags={p} key={i} />
-            ))
-          }
-        </div>
-      )
-    };
-    
 export default Tags;
